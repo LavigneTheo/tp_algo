@@ -7,7 +7,7 @@ type
 
 var 
     //Nombre saisis par l'utilisateur
-    number : Real;
+    nombre : Real;
     //Poiteur vers le tableau qui stocke la d‚composition du nombre
     tabPtr : Tptr;
     //Stocke le r‚sultat
@@ -25,16 +25,16 @@ var
  *
  *)
 begin
-	While getInput() = FALSE do;
+	While obtenirSaisie() = FALSE do;
 	new(tabPtr);
 	
 	decompose();
     
-    res :=                  getMillions(tabPtr^[0]);
-    res := res + ' ' + getThousands(tabPtr^[1]);
-    res := res + ' ' + getHundreds(tabPtr^[2],  FALSE);
-    res := res + ' ' + getEuros();
-    res := res + ' ' + getCents(tabPtr^[3]);
+    res :=                  millions(tabPtr^[0]);
+    res := res + ' ' + milliers(tabPtr^[1]);
+    res := res + ' ' + centaines(tabPtr^[2],  FALSE);
+    res := res + ' ' + euros();
+    res := res + ' ' + centimes(tabPtr^[3]);
     
     Writeln(res);
 	Readln();
