@@ -1,8 +1,8 @@
 Program file_program;
 
 const
-    debut = 1;
-    fin = 10;
+    debut = 0;
+    fin = 9;
     size = fin - debut + 1;
 
 type
