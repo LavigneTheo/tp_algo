@@ -2,15 +2,19 @@ Program game_of_life;
 {$mode objfpc}
 Uses Math, sysutils,  Crt, Classes;
 
+(*
+ * Code disponble … l'adresse : https://github.com/LavigneTheo/tp_algo/tree/master/game_of_life
+ *)
+
 const
     width = 80;
     height = 15;
     
     (*
-     *  Chemins jusqu'au fichier texte contenant la sauvegarde et le canon
+     *  Noms des fichiers texte contenant la sauvegarde et le canon
      *)
-    SAVE_PATH = 'C:/Users/Theo/Desktop/cours/algo/code/game_of_life/m.txt';
-    GUN_PATH = 'C:/Users/Theo/Desktop/cours/algo/code/game_of_life/gosperGliderGun.txt';
+    SAVE_FILE = 'save.txt';
+    GUN_FILE = 'gosperGliderGun.txt';
     
     QUITTER = 9;
     
@@ -23,6 +27,7 @@ var
     c : char;
     circular : boolean;
     MyFile: TextFile;
+    currentDir : string;
     
     {$i base.pas}
     {$i normal.pas}
@@ -52,6 +57,7 @@ begin
 end;
 
 Begin
+    currentDir := getPath();
 	printBorder();
 	printOptions();
 	switchToCircularMode(circular);
@@ -61,15 +67,15 @@ Begin
 		
 		case choice of
         1 : continue(currentTurn, nextTurn);
-        2 : loadGrid(currentTurn, SAVE_PATH);
-        3 : saveGrid(currentTurn);
+        2 : loadGrid(currentTurn, currentDir + SAVE_FILE);
+        3 : saveGrid(currentTurn, currentDir + SAVE_FILE);
         4 : switchToCircularMode(circular);
         5 : switchToNormalMode(circular);
         6 : generateRandomGrid(currentTurn);
-        7 : loadGun(currentTurn, GUN_PATH, circular);
+        7 : loadGun(currentTurn, currentDir + GUN_FILE, circular);
         8 : placePlanar(currentTurn);
     end;
     
-		Until choice = QUITTER
-	
+    Until choice = QUITTER
+
 end.

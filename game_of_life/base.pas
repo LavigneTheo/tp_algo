@@ -1,5 +1,5 @@
 (*
- *  Met … jours une cellule vivante au tours courant. Selon le nombre de nadjacentes vivantes 
+ *  Met … jours une cellule qui est vivante au tours courant. Selon le nombre de cellules adjacentes vivantes 
  *  insŠre 1 ou 0 dans le tableau du prochain tours.
  *)
 Procedure updateLiving(var tab2 : arr; y, x, nbChild : Integer);
@@ -15,7 +15,7 @@ Begin
 End;
 
 (*
- *  Met … jours une cellule morte au tours courant. Selon le nombre de adjacentes vivantes 
+ *  Met … jours une cellule qui est morte au tours courant. Selon le nombre de cellules adjacentes vivantes 
  *  insŠre 1 ou 0 dans le tableau du prochain tours.
  *)
 Procedure updateDead(var tab2 : arr; y, x, nbChild : Integer);
@@ -31,7 +31,7 @@ Begin
 End;
 
 (*
- *  Imprime le tableau du tours cours courant … l'‚cran.
+ *  Imprime le tableau du tours courant … l'‚cran.
  *  Pour des raisons d'optimisations, le tableau est imprim‚ ligne par ligne. Chaque index du tableau est concat‚n‚
  *  dans une chaine caractŠre qui est ensuite imprim‚ … l'ecran.
  *)
@@ -103,7 +103,7 @@ begin
 end;
 
 (*
- *  Imprime les options utilisablent par l'utilisateur.
+ *  Imprime les options utilisablent par l'utilisateur sur l'ecran.
  *)
 Procedure printOptions();
 Begin
@@ -132,16 +132,16 @@ Begin
 end;
 
 (*
- *  Sauvegarde le tableau du tours courant dans le fichier texte de sauvegarde
+ *  Sauvegarde le tableau du tour courant dans le fichier texte de sauvegarde
  *  Renvoie faux si une erreur intervient durant la sauvegarde du fichier.
  *)
-Function save(var tab : arr) : boolean;
+Function save(var tab : arr; path : string) : boolean;
 var
     s : String;
     y, x : Integer;
     success : Boolean;
 begin
-    AssignFile(MyFile, SAVE_PATH);
+    AssignFile(MyFile, path);
     success := TRUE;
     try
         ReWrite(MyFile);
@@ -194,7 +194,7 @@ begin
 end;
 
 (*
- *  Deamande un entier … l'utilisateur.
+ *  Demande un entier … l'utilisateur.
  *)
 Function askOption: Integer;
 var
@@ -208,7 +208,8 @@ Begin
 end;
 
 (*
- *  Charge la grille de sauvegarde
+ *  Charge la grille de sauvegarde dans le tableau du tours courant et l'imprime … l'ecran si le chargement
+ *  s'est effectuer correctement.
  *)
 Procedure loadGrid(var tab : arr; path : string);
 begin
@@ -225,26 +226,27 @@ begin
 end;
 
 (*
- *  Charge la grille contenant le canon
+ *  Charge la grille contenant le canon, change le mode … normal
  *)
-Procedure loadGun(var currTurn : arr; GUN_PATH : string; var circu : boolean);
+Procedure loadGun(var currTurn : arr; path : string; var circu : boolean);
 begin
+	gotoxy(50, 28);
 	switchToNormalMode(circu);
-	loadGrid(currTurn, GUN_PATH);
+	loadGrid(currTurn, path);
 end;
 
 (*
  *  Appel la fonction permettant de persister le tableau dans un fichier texte. 
- *  Notifie l'utisateur du succŠs de l'op‚ration
+ *  Notifie l'utisateur du succŠs de l'op‚rationoun un echec.
  *)
-Procedure  saveGrid(var tab : arr);
+Procedure  saveGrid(var tab : arr; path : string);
 begin
 	gotoxy(40, 20);
-	if(save(tab)) then write('Sauvegarde reussie!                  ') Else write('La sauvegarde a ‚chouee!               ');
+	if(save(tab, path)) then write('Sauvegarde reussie!                  ') Else write('La sauvegarde a ‚chouee!               ');
 end;
 
 (*
- *  GŠnere un tableau de 0 et de 1 compos‚ de valuers al‚atoires. Imprime le tableau … la fin du processus.
+ *  GŠnere un tableau de 0 et de 1 compos‚ de valeurs al‚atoires. Imprime le tableau … l'‚cran … la fin du processus.
  *)
  Procedure generateRandomGrid(var tab : arr);
  var
@@ -275,16 +277,16 @@ end;
 Procedure askCoord(var x, y : Integer);
 Begin
 	gotoxy(40, 20);
-	write('Choissiez l absisse : ');
+	write('Choissiez l absisse :           ');
 	read(x);
 	gotoxy(40, 21);
-	write('Choissiez l ordonee : ');
+	write('Choissiez l ordonee :          ');
 	read(y);
 	
 	gotoxy(40, 20);
-	write('                          ');
+	write('                                                        ');
 	gotoxy(40, 21);
-	write('                          ');
+	write('                                                        ');
 end;
 
 (*
@@ -321,3 +323,19 @@ begin
     end;
 	printGrid(tab);
 end;
+
+(* 
+ *  Renvoie une chaŒne de caractŠre qui contient le chemin jusqu'au dossier o— se trouve l'application (.exe).
+ *)
+ Function getPath() : string;
+ var
+   i : Integer;
+   s : string;
+ begin
+ 	s := ParamStr(0);
+    i := length(s);
+    while(s[i] <> '\') do
+        i -= 1;
+    
+    getPath :=  copy(s, 1, i);
+ end;

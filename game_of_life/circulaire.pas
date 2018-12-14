@@ -1,5 +1,5 @@
 (*
- *  Renvoie le nombre de cellules vivantes autours de la case situ‚e dans coin en haut … gauche.
+ *  Renvoie le nombre de cellules vivantes autours de la case situ‚e dans le coin en haut … gauche.
  *  Le tableau est trait‚ de maniŠre circulaire, si l'index de la case adjacente est hors des limites du tableau, 
  *  elle va chercher la cellule situ‚e … l'autre extr‚mit‚e.
  *)
@@ -29,7 +29,7 @@ Begin
 End;    
 
 (*
- *  Renvoie le nombre de cellules vivantes autours de la case situ‚e dans coin en bas … gauche.
+ *  Renvoie le nombre de cellules vivantes autours de la case situ‚e dans le coin en bas … gauche.
  *  Le tableau est trait‚ de maniŠre circulaire, si l'index de la case adjacente est hors des limites du tableau, 
  *  elle va chercher la cellule situ‚e … l'autre extr‚mit‚e.
  *)
@@ -39,7 +39,7 @@ Begin
 End; 
 
 (*
- *  Renvoie le nombre de cellules vivantes autours de la case situ‚e dans coin en bas … droite.
+ *  Renvoie le nombre de cellules vivantes autours de la case situ‚e dans le coin en bas … droite.
  *  Le tableau est trait‚ de maniŠre circulaire, si l'index de la case adjacente est hors des limites du tableau, 
  *  elle va chercher la cellule situ‚e … l'autre extr‚mit‚e.
  *)
@@ -49,7 +49,7 @@ Begin
 End;   
 
 (*
- *  Renvoie le nombre de cellules vivantes autours de la case situ‚e sur la derniŠre ligne.
+ *  Renvoie le nombre de cellules vivantes autours d'une case situ‚e sur la derniŠre ligne.
  *  Le tableau est trait‚ de maniŠre circulaire, si l'index de la case adjacente est hors des limites du tableau, 
  *  elle va chercher la cellule situ‚e … l'autre extr‚mit‚e.
  *)
@@ -90,8 +90,8 @@ End;
 (*
  *  Met … jour la grille de maniŠre circulaire. Appelle la fonction permettant de d‚terminer le nombre de cellules adjacentes
  *  qui sont vivantes. Appel des fonctions diff‚rentes si la cellule se situe sur un bord.
- *  Une fois le nombre d'enfant obtenu, d‚termine si la cellule doit ˆtre vivante ou morte au prochain tours. 
- *  Enfin stocke les valeurs du tours suivant dans le tableau du tours courant.
+ *  Une fois le nombre d'enfant obtenu, appel les fonctions qui d‚termine si la cellule doit vivre ou mourir au prochai tours. 
+ *  Enfin stocke les donn‚es du tours suivant dans le tableau du tours courant.
  *)
 Procedure updateGridCircu(var tab1, tab2 : arr);
 var
