@@ -3,9 +3,9 @@ Uses Math, SysUtils,  Crt;
 
 const
     min = 0;
-    max = 99;
-    width = 10;
-    height = 10;
+    max = 1999;
+    width = 80;
+    height = 15;
 
 type
     arr = Array[min..max] of Boolean;
@@ -21,17 +21,11 @@ var
 Begin
 	nbChild := 0;
 	if(tab[i + 1]) Then
-	Begin
 		nbChild := nbChild + 1;
-	End;
 	if(tab[ i + width]) Then
-	Begin
 		nbChild := nbChild + 1;
-	End;
 	if(tab[i + width + 1]) Then
-    Begin
     	nbChild := nbChild + 1;
-    end;
     nbChildTopLeft := nbChild;
 End;    
 
@@ -204,8 +198,6 @@ Begin
     Begin
     	nbChild := nbChild + 1;
     end;
-    
-  
     nbChildRight := nbChild;
 End;  
 
@@ -215,43 +207,27 @@ var
 Begin
 	nbChild := 0;
 	if(tab[i  - width - 1]) Then
-	Begin
 		nbChild := nbChild + 1;
-	End;
 	if(tab[i - width]) Then
-	Begin
 		nbChild := nbChild + 1;
-	End;
 	if(tab[i - width + 1]) Then
-	Begin
 		nbChild := nbChild + 1;
-	End;
 	if(tab[i - 1]) Then
-	Begin
 		nbChild := nbChild + 1;
-	End;
 	if(tab[ i + 1]) Then
-	Begin
 		nbChild := nbChild + 1;
-	End;
 	if(tab[i  + width - 1]) Then
-    Begin
     	nbChild := nbChild + 1;
-    end;
     if(tab[i  + width]) Then
-    Begin
     	nbChild := nbChild + 1;
-    end;
     if(tab[i  + width + 1]) Then
-    Begin
     	nbChild := nbChild + 1;
-    end;
     nbChildNormal := nbChild;
 End;  
 
 Procedure updateLiving(var tab2 : arr; i, nbChild : Integer);
 Begin
-    if(nbChild = 2) Then
+    if(nbChild = 2) OR (nbChild = 3) Then
     Begin
     	tab2[i] := TRUE;
     end
@@ -374,17 +350,17 @@ Begin
 end;
 
 Begin
-    t1[0] := TRUE;
-    t1[1] := TRUE;
-    t1[2] := TRUE;
-    t1[3] := TRUE;
-    t1[4] := TRUE;
-    t1[5] := TRUE;
-    t1[10] := TRUE;
-    t1[11] := TRUE;
-    t1[12] := TRUE;
-    t1[13] := TRUE;
-    t1[14] := TRUE;
+    t1[80 * 5 + 6] := TRUE;
+    t1[80 * 6 + 7] := TRUE;
+    t1[80 * 7 + 7] := TRUE;
+    t1[80 * 7 + 3] := TRUE;
+    
+    t1[80 * 8 + 4] := TRUE;
+    t1[80 * 8 + 5] := TRUE;
+    t1[80 * 8 + 6] := TRUE;
+    t1[80 * 8 + 7] := TRUE;
+
+
     
 	printGrid(t1);
 	While(merde < 100) do
