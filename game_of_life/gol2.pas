@@ -5,27 +5,32 @@ Uses Math, sysutils,  Crt, Classes;
 const
     width = 80;
     height = 15;
-    FILE_PATH = 'C:/Users/Theo/Desktop/cours/algo/code/game_of_life/m.txt';
     
-    QUITTER = 7;
+    (*
+     *  Chemins jusqu'au fichier texte contenant la sauvegarde et le canon
+     *)
+    SAVE_PATH = 'C:/Users/Theo/Desktop/cours/algo/code/game_of_life/m.txt';
+    GUN_PATH = 'C:/Users/Theo/Desktop/cours/algo/code/game_of_life/gosperGliderGun.txt';
     
-    MODE_NORMAL = 'normal';
-    MODE_CIRCULAR = 'circular';
+    QUITTER = 9;
     
 type
     arr = Array[0..height - 1, 0..width - 1] of Integer;
     
 var
-    t1, t2 : arr;
+    currentTurn, nextTurn : arr;
     choice : Integer;
     c : char;
-    mode : string;
+    circular : boolean;
     MyFile: TextFile;
     
     {$i base.pas}
     {$i normal.pas}
     {$i circulaire.pas}
 
+(*
+ *  Effectue 100 tours. Selon que l'on soit en mode circulaire, ou en mode normal, appel une fonction diff‚rente.
+ *)
 Procedure continue(var tab1, tab2 : arr);
 var
     turn : Integer;
@@ -33,8 +38,7 @@ begin
 	turn := 0;
 	While(turn < 100) do
 	Begin
-		sleep(200);
-		if(mode = MODE_CIRCULAR) then
+		if(circular) then
 		begin
             updateGridCircu(tab1, tab2);
 		end
@@ -47,32 +51,24 @@ begin
 	end;
 end;
 
- Procedure generateRandomGrid(var tab : arr);
- var
-    y, x : Integer;
-Begin
-	 for y := 0 to height -1 do
-    Begin     
-		For x := 0 to width -1 do
-            begin  
-            End;
-    End;
-end;
-
 Begin
 	printBorder();
 	printOptions();
-	
+	switchToCircularMode(circular);
+    
 	Repeat
 		choice := askOption();
+		
 		case choice of
-        1 : continue(t1, t2);
-        2 : loadGrid(t1);
-        3 : saveGrid(t1);
-        4 : mode := MODE_CIRCULAR;
-        5 : mode := MODE_NORMAL;
-        6 : generateRandomGrid(t1);
-        end;
+        1 : continue(currentTurn, nextTurn);
+        2 : loadGrid(currentTurn, SAVE_PATH);
+        3 : saveGrid(currentTurn);
+        4 : switchToCircularMode(circular);
+        5 : switchToNormalMode(circular);
+        6 : generateRandomGrid(currentTurn);
+        7 : loadGun(currentTurn, GUN_PATH, circular);
+        8 : placePlanar(currentTurn);
+    end;
     
 		Until choice = QUITTER
 	
